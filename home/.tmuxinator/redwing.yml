@@ -1,0 +1,35 @@
+# ~/.tmuxinator/redwing.yml
+
+name: redwing
+root: ~/code/riot
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+windows:
+  - redwingServer:
+      layout: f0ef,272x62,0,0{136x62,0,0[136x31,0,0,18,136x30,0,32,16],135x62,137,0[135x31,137,0,17,135x30,137,32,15]}
+      panes:
+        - cd redwing-server; redis-server /usr/local/etc/redis.conf
+        - cd redwing-server; npm start
+        - cd redwing-server; subl .
+        - cd redwing-server; echo '';
+  - redwingClient:
+      layout: f0ef,272x62,0,0{136x62,0,0[136x31,0,0,18,136x30,0,32,16],135x62,137,0[135x31,137,0,17,135x30,137,32,15]}
+      panes:
+        - cd apollo-js; grunt server
+        - cd apollo-js; subl .
+        - cd apollo-js; echo '';
+        - cd apollo-js; echo '';

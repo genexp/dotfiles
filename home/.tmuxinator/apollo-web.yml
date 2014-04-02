@@ -1,0 +1,42 @@
+# ~/.tmuxinator/apollo-web.yml
+
+name: apollo-web
+root: ~/code/riot
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+windows:
+  - pollServer:
+      layout: f0ef,272x62,0,0{136x62,0,0[136x31,0,0,18,136x30,0,32,16],135x62,137,0[135x31,137,0,17,135x30,137,32,15]}
+      panes:
+        - cd poll-service; elasticsearch -f -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
+        - cd poll-service; npm start
+        - cd poll-service; subl .
+        - cd poll-service; echo '';
+  - pollJS:
+      layout: f0ef,272x62,0,0{136x62,0,0[136x31,0,0,18,136x30,0,32,16],135x62,137,0[135x31,137,0,17,135x30,137,32,15]}
+      panes:
+        - cd poll-js; grunt server
+        - cd poll-js; subl .
+        - cd poll-js; echo '';
+        - cd poll-js; echo '';
+  - apolloWeb:
+      layout: f0ef,272x62,0,0{136x62,0,0[136x31,0,0,18,136x30,0,32,16],135x62,137,0[135x31,137,0,17,135x30,137,32,15]}
+      panes:
+        - cd apollo-web; php app/console server:run 0.0.0.0:8000
+        - cd apollo-web; php app/console assetic:dump --watch
+        - cd apollo-web; subl .; bin/compass watch src/Riot/Bundle/ApolloForumsBundle/Resources/compass/
+        - cd apollo-web; echo '';

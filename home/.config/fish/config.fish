@@ -45,6 +45,10 @@ if [ "$OS" = "darwin" ]
     set -gx EDITOR "$SUBL -w"
     set -gx GIT_EDITOR "$SUBL -w"
   end
+
+  function fish_greeting
+    archey -c
+  end
 end
 
 source "$HOME/.homesick/repos/homeshick/homeshick.fish"
